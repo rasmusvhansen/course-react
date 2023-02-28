@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import './App.css';
-import { findMovies } from './services/movies';
 import { MovieSearch } from './MovieSearch';
 
 function App() {
