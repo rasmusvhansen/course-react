@@ -1,5 +1,3 @@
-// findMovies('Terminator').then(m => console.log(m));
-
 import classNames from 'classnames';
 import { useState } from 'react';
 import { findMovies, Movie, SearchResult } from './services/movies';
