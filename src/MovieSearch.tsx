@@ -1,86 +1,36 @@
-// findMovies('Terminator').then(m => console.log(m));
-
-import classNames from 'classnames';
-import { useState } from 'react';
-import { findMovies, Movie, SearchResult } from './services/movies';
-import { Spinner } from './Spinner';
-import { range } from './util';
-
 export function MovieSearch() {
-  const [searchResult, setSearchResult] = useState<SearchResult | 'Loading'>();
-
-  const search = async (query: string, page = 1) => {
-    setSearchResult('Loading');
-    const result = await findMovies(query, page);
-    setSearchResult(result);
-  };
-
   return (
     <>
-      <Search onSearch={search} />
-      {searchResult === 'Loading' && (
-        <div className="flex items-center justify-center h-full">
-          <Spinner />
-        </div>
-      )}
-      {typeof searchResult === 'object' && (
-        <div className="pt-4 flex flex-col">
-          <Pagination
-            page={searchResult.page}
-            totalPages={searchResult.totalPages}
-            onPageChange={p => search(searchResult.query, p)}
-          ></Pagination>
-          <Movies movies={searchResult.movies} />
-          <Pagination
-            page={searchResult.page}
-            totalPages={searchResult.totalPages}
-            onPageChange={p => search(searchResult.query, p)}
-          ></Pagination>
-        </div>
-      )}
+      <div className="pt-4 flex flex-col">
+        <Movies />
+      </div>
     </>
   );
 }
 
-function Search({ onSearch }: { onSearch: (query: string) => void }) {
-  const [query, setQuery] = useState('');
+export function Movies() {
   return (
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        onSearch(query);
-      }}
-    >
-      <input type="search" className="input" placeholder="Search for movies" value={query} onInput={e => setQuery(e.currentTarget.value)} />
-    </form>
+    <div className="grid grid-cols-3 gap-4 mt-4">
+      <MovieTile />
+    </div>
   );
 }
 
-function Pagination({ onPageChange, totalPages, page }: { totalPages: number; page: number; onPageChange: (p: number) => void }) {
-  return totalPages > 1 ? (
-    <div className="btn-group self-end">
-      {range(1, totalPages).map(p => (
-        <button key={p} className={classNames('btn', { 'btn-active': p === page })} onClick={() => onPageChange(p)}>
-          {p}
-        </button>
-      ))}
-    </div>
-  ) : null;
-}
-
-export function Movies({ movies }: { movies: Movie[] | undefined }) {
-  return <div className="grid grid-cols-3 gap-4 mt-4">{movies && movies.map(m => <MovieTile m={m} key={m.id} />)}</div>;
-}
-
-export function MovieTile({ m }: { m: Movie }) {
+export function MovieTile() {
   return (
-    <a href={m.link} target="_blank" className="shadow-xl group relative w-[300px] overflow-hidden">
-      {m.poster && <img className="group-hover:opacity-10" src={m.poster} alt={m.description} />}
+    <a href="https://www.themoviedb.org/movie/562" target="_blank" className="shadow-xl group relative w-[300px] overflow-hidden">
+      <img
+        className="group-hover:opacity-10"
+        src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/yFihWxQcmqcaBR31QM6Y8gT6aYV.jpg"
+        alt="Movie poster"
+      />
       <div className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 p-4 ">
-        <h3>
-          {m.title} [{m.releaseYear}] [{m.rating.toFixed(1)}]
-        </h3>
-        <p>{m.description}</p>
+        <h3>Die Hard [1988] [7.8]</h3>
+        <p>
+          NYPD cop John McClane's plan to reconcile with his estranged wife is thrown for a serious loop when, minutes after he arrives at
+          her office, the entire building is overtaken by a group of terrorists. With little help from the LAPD, wisecracking McClane sets
+          out to single-handedly rescue the hostages and bring the bad guys down.
+        </p>
       </div>
     </a>
   );
