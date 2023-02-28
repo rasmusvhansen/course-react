@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { findMovies, Movie, SearchResult } from './services/movies';
 import { Spinner } from './Spinner';
-import { range } from './util';
 
 export function MovieSearch() {
   const [searchResult, setSearchResult] = useState<SearchResult | 'Loading'>();
@@ -23,17 +22,7 @@ export function MovieSearch() {
       )}
       {typeof searchResult === 'object' && (
         <div className="pt-4 flex flex-col">
-          <Pagination
-            page={searchResult.page}
-            totalPages={searchResult.totalPages}
-            onPageChange={p => search(searchResult.query, p)}
-          ></Pagination>
           <Movies movies={searchResult.movies} />
-          <Pagination
-            page={searchResult.page}
-            totalPages={searchResult.totalPages}
-            onPageChange={p => search(searchResult.query, p)}
-          ></Pagination>
         </div>
       )}
     </>
@@ -52,18 +41,6 @@ function Search({ onSearch }: { onSearch: (query: string) => void }) {
       <input type="search" className="input" placeholder="Search for movies" value={query} onInput={e => setQuery(e.currentTarget.value)} />
     </form>
   );
-}
-
-function Pagination({ onPageChange, totalPages, page }: { totalPages: number; page: number; onPageChange: (p: number) => void }) {
-  return totalPages > 1 ? (
-    <div className="btn-group self-end">
-      {range(1, totalPages).map(p => (
-        <button key={p} className={classNames('btn', { 'btn-active': p === page })} onClick={() => onPageChange(p)}>
-          {p}
-        </button>
-      ))}
-    </div>
-  ) : null;
 }
 
 export function Movies({ movies }: { movies: Movie[] | undefined }) {
