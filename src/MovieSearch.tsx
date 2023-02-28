@@ -1,13 +1,10 @@
-import classNames from 'classnames';
 import { useState } from 'react';
 import { findMovies, Movie, SearchResult } from './services/movies';
-import { Spinner } from './Spinner';
 
 export function MovieSearch() {
-  const [searchResult, setSearchResult] = useState<SearchResult | 'Loading'>();
+  const [searchResult, setSearchResult] = useState<SearchResult>();
 
   const search = async (query: string, page = 1) => {
-    setSearchResult('Loading');
     const result = await findMovies(query, page);
     setSearchResult(result);
   };
@@ -15,12 +12,7 @@ export function MovieSearch() {
   return (
     <>
       <Search onSearch={search} />
-      {searchResult === 'Loading' && (
-        <div className="flex items-center justify-center h-full">
-          <Spinner />
-        </div>
-      )}
-      {typeof searchResult === 'object' && (
+      {searchResult && (
         <div className="pt-4 flex flex-col">
           <Movies movies={searchResult.movies} />
         </div>
