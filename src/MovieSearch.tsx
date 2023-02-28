@@ -57,7 +57,7 @@ function Search({ onSearch }: { onSearch: (query: string) => void }) {
 }
 
 function Pagination({ onPageChange, totalPages, page }: { totalPages: number; page: number; onPageChange: (p: number) => void }) {
-  return (
+  return totalPages > 1 ? (
     <div className="btn-group self-end">
       {range(1, totalPages).map(p => (
         <button key={p} className={classNames('btn', { 'btn-active': p === page })} onClick={() => onPageChange(p)}>
@@ -65,7 +65,7 @@ function Pagination({ onPageChange, totalPages, page }: { totalPages: number; pa
         </button>
       ))}
     </div>
-  );
+  ) : null;
 }
 
 export function Movies({ movies }: { movies: Movie[] | undefined }) {
