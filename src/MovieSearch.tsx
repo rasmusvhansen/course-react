@@ -1,37 +1,13 @@
-import { useState } from 'react';
-import { findMovies, Movie, SearchResult } from './services/movies';
+import { movies } from './dummydata';
+import { Movie } from './services/movies';
 
 export function MovieSearch() {
-  const [searchResult, setSearchResult] = useState<SearchResult>();
-
-  const search = async (query: string, page = 1) => {
-    const result = await findMovies(query, page);
-    setSearchResult(result);
-  };
-
   return (
     <>
-      <Search onSearch={search} />
-      {searchResult && (
-        <div className="pt-4 flex flex-col">
-          <Movies movies={searchResult.movies} />
-        </div>
-      )}
+      <div className="pt-4 flex flex-col">
+        <Movies movies={movies} />
+      </div>
     </>
-  );
-}
-
-function Search({ onSearch }: { onSearch: (query: string) => void }) {
-  const [query, setQuery] = useState('');
-  return (
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        onSearch(query);
-      }}
-    >
-      <input type="search" className="input" placeholder="Search for movies" value={query} onInput={e => setQuery(e.currentTarget.value)} />
-    </form>
   );
 }
 
