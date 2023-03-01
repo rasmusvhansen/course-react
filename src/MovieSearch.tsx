@@ -35,13 +35,13 @@ export function MovieSearch() {
           <Pagination
             page={searchResult.page}
             totalPages={searchResult.totalPages}
-            onPageChange={p => search(searchResult.queryOrGenreId, p)}
+            onPageChange={p => search(searchResult.query, p)}
           ></Pagination>
           <Movies movies={searchResult.movies} />
           <Pagination
             page={searchResult.page}
             totalPages={searchResult.totalPages}
-            onPageChange={p => search(searchResult.queryOrGenreId, p)}
+            onPageChange={p => search(searchResult.query, p)}
           ></Pagination>
         </div>
       )}

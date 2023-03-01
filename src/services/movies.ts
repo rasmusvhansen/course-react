@@ -23,14 +23,14 @@ export async function findByGenre(genreId: number, currentPage = 1): Promise<Sea
   return await parseMovieResult(json, genreId);
 }
 
-async function parseMovieResult(json: Response, queryOrGenreId: string | number): Promise<SearchResult> {
+async function parseMovieResult(json: Response, query: string | number): Promise<SearchResult> {
   const { results, page, total_pages, total_results } = TMDBResultSchema.parse(await json.json());
   return {
     movies: results.map(toMovie).filter(m => !!m.poster),
     page,
     totalPages: Math.min(10, total_pages),
     results: total_results,
-    queryOrGenreId
+    query
   };
 }
 
@@ -61,7 +61,7 @@ export interface SearchResult {
   totalPages: number;
   page: number;
   movies: Movie[];
-  queryOrGenreId: string | number;
+  query: string | number;
 }
 
 const TMDBMovieSchema = z.object({
