@@ -1,20 +1,29 @@
 import classNames from 'classnames';
-import { useState } from 'react';
-import { findMovies, Movie, SearchResult } from './services/movies';
+import { useEffect, useState } from 'react';
+import { findByGenre, findMovies, Genres, getGenres, Movie, SearchResult } from './services/movies';
 import { Spinner } from './Spinner';
 import { range } from './util';
 
 export function MovieSearch() {
   const [searchResult, setSearchResult] = useState<SearchResult | 'Loading'>();
+  const [genres, setGenres] = useState<Genres>([]);
+  useEffect(() => {
+    const get = async () => {
+      const genreResult = await getGenres();
+      setGenres(genreResult);
+    };
+    get();
+  }, []);
 
-  const search = async (query: string, page = 1) => {
+  const search = async (queryOrGenreId: string | number, page = 1) => {
     setSearchResult('Loading');
-    const result = await findMovies(query, page);
+    const result = await (typeof queryOrGenreId === 'string' ? findMovies(queryOrGenreId, page) : findByGenre(queryOrGenreId, page));
     setSearchResult(result);
   };
 
   return (
     <>
+      <GenreList genres={genres} onGenreClick={search} />
       <Search onSearch={search} />
       {searchResult === 'Loading' && (
         <div className="flex items-center justify-center h-full">
@@ -26,17 +35,29 @@ export function MovieSearch() {
           <Pagination
             page={searchResult.page}
             totalPages={searchResult.totalPages}
-            onPageChange={p => search(searchResult.query, p)}
+            onPageChange={p => search(searchResult.queryOrGenreId, p)}
           ></Pagination>
           <Movies movies={searchResult.movies} />
           <Pagination
             page={searchResult.page}
             totalPages={searchResult.totalPages}
-            onPageChange={p => search(searchResult.query, p)}
+            onPageChange={p => search(searchResult.queryOrGenreId, p)}
           ></Pagination>
         </div>
       )}
     </>
+  );
+}
+
+function GenreList({ genres, onGenreClick }: { genres: Genres; onGenreClick: (genreId: number) => void }) {
+  return (
+    <div className="space-x-2 space-y-2 mb-4">
+      {genres.map(g => (
+        <button key={g.id} type="button" className="btn btn-secondary btn-xs" onClick={() => onGenreClick(g.id)}>
+          {g.name}
+        </button>
+      ))}
+    </div>
   );
 }
 
