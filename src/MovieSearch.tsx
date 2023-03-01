@@ -49,7 +49,7 @@ export function MovieSearch() {
   );
 }
 
-function GenreList({ genres, onGenreClick }: { genres: Genres; onGenreClick: (genreId: number) => void }) {
+export function GenreList({ genres, onGenreClick }: { genres: Genres; onGenreClick: (genreId: number) => void }) {
   return (
     <div className="space-x-2 space-y-2 mb-4">
       {genres.map(g => (
