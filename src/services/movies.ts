@@ -16,14 +16,14 @@ export async function getGenres() {
   return res.genres;
 }
 
-export async function findByGenre(genreId: number, currentPage = 1): Promise<SearchResult> {
+export async function findByGenre(genreId: number, currentPage = 1): Promise<GenreResult> {
   const json = await fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&include_adult=false&with_genres=${genreId}&sort_by=popularity.desc&page=${currentPage}`
   );
   return await parseMovieResult(json, genreId);
 }
 
-async function parseMovieResult(json: Response, query: string | number): Promise<SearchResult> {
+async function parseMovieResult<T extends string | number>(json: Response, query: T) {
   const { results, page, total_pages, total_results } = TMDBResultSchema.parse(await json.json());
   return {
     movies: results.map(toMovie).filter(m => !!m.poster),
@@ -61,8 +61,10 @@ export interface SearchResult {
   totalPages: number;
   page: number;
   movies: Movie[];
-  query: string | number;
+  query: string;
 }
+
+export type GenreResult = Omit<SearchResult, 'query'> & { query: number };
 
 const TMDBMovieSchema = z.object({
   id: z.number(),

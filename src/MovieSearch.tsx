@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { findByGenre, findMovies, Genres, getGenres, Movie, SearchResult } from './services/movies';
+import { findByGenre, findMovies, GenreResult, Genres, getGenres, Movie, SearchResult } from './services/movies';
 import { Spinner } from './Spinner';
 import { range } from './util';
 
 export function MovieSearch() {
-  const [searchResult, setSearchResult] = useState<SearchResult | 'Loading'>();
+  const [searchResult, setSearchResult] = useState<SearchResult | GenreResult | 'Loading'>();
   const [genres, setGenres] = useState<Genres>([]);
   useEffect(() => {
     const get = async () => {
