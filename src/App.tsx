@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { MovieSearch } from './MovieSearch';
 
+const SHOW_PLAYGROUND = false;
+
 function App() {
   return (
     <div className="max-w-5xl bg-slate-200 border-x-2 border-slate-600 h-screen overflow-auto mx-auto px-8 py-8">
-      {/* <PlayGround /> */}
+      {SHOW_PLAYGROUND && <PlayGround />}
       <h1>Find movies</h1>
-      <MovieSearch></MovieSearch>
+      <MovieSearch />
     </div>
   );
 }
