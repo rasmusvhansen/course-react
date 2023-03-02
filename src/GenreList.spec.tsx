@@ -18,11 +18,9 @@ const genres: Genres = [
 ];
 
 describe('GenreList', () => {
-  beforeEach(() => {});
-
   it('should render all genres passed in', async () => {
     const clickFn = vitest.fn();
-    render(<GenreList genres={genres} onGenreClick={clickFn}></GenreList>);
+    render(<GenreList genres={genres} onGenreClick={clickFn} />);
 
     const genreButtons = screen.getAllByRole('button');
     expect(genreButtons).toHaveLength(3);
@@ -31,7 +29,7 @@ describe('GenreList', () => {
 
   it('should respond to click with genre id', async () => {
     const clickFn = vitest.fn();
-    render(<GenreList genres={genres} onGenreClick={clickFn}></GenreList>);
+    render(<GenreList genres={genres} onGenreClick={clickFn} />);
 
     const genreButtons = screen.getAllByRole('button');
     genreButtons.at(1)?.click();
