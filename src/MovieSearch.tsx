@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { useState } from 'react';
 import { findMovies, Movie, SearchResult } from './services/movies';
 import { Spinner } from './Spinner';
@@ -49,7 +48,7 @@ export function Movies({ movies }: { movies: Movie[] | undefined }) {
 
 export function MovieTile({ m }: { m: Movie }) {
   return (
-    <a href={m.link} target="_blank" className="shadow-xl group relative w-[300px] overflow-hidden">
+    <a href={m.link} target="_blank" rel="noreferrer" className="shadow-xl group relative w-[300px] overflow-hidden">
       {m.poster && <img className="group-hover:opacity-10" src={m.poster} alt={m.description} />}
       <div className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 p-4 ">
         <h3>

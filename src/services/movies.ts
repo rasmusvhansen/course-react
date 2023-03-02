@@ -6,13 +6,12 @@ export async function findMovies(query: string, currentPage = 1): Promise<Search
   const json = await fetch(
     `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=${currentPage}&include_adult=false&query=${query}`
   );
-  return await parseMovieResult(json, query);
+  return parseMovieResult(json, query);
 }
 
 export async function getGenres() {
   const json = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US&include_adult=false`);
   const res = TMDBGenreSchema.parse(await json.json());
-  console.log(res);
   return res.genres;
 }
 
@@ -20,15 +19,17 @@ export async function findByGenre(genreId: number, currentPage = 1): Promise<Gen
   const json = await fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&include_adult=false&with_genres=${genreId}&sort_by=popularity.desc&page=${currentPage}`
   );
-  return await parseMovieResult(json, genreId);
+  return parseMovieResult(json, genreId);
 }
 
 async function parseMovieResult<T extends string | number>(json: Response, query: T) {
+  // eslint-disable-next-line camelcase
   const { results, page, total_pages, total_results } = TMDBResultSchema.parse(await json.json());
   return {
     movies: results.map(toMovie).filter(m => !!m.poster),
     page,
     totalPages: Math.min(10, total_pages),
+    // eslint-disable-next-line camelcase
     results: total_results,
     query
   };
@@ -84,7 +85,6 @@ const TMDBResultSchema = z.object({
 
 const TMDBGenreSchema = z.object({ genres: z.array(z.object({ id: z.number(), name: z.string() })) });
 
-type TMDBResult = z.infer<typeof TMDBResultSchema>;
 type TMDBMovie = z.infer<typeof TMDBMovieSchema>;
 type TMDBGenreResult = z.infer<typeof TMDBGenreSchema>;
 export type Genres = TMDBGenreResult['genres'];
