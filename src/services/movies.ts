@@ -41,7 +41,7 @@ function toMovie(m: TMDBMovie): Movie {
     link: `https://www.themoviedb.org/movie/${m.id}`,
     title: m.title,
     description: m.overview,
-    releaseYear: +m.release_date.slice(0, 4),
+    releaseYear: m.release_date ? +m.release_date.slice(0, 4) : 0,
     rating: m.vote_average,
     poster: m.poster_path && `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${m.poster_path}`
   };
@@ -71,7 +71,7 @@ const TMDBMovieSchema = z.object({
   id: z.number(),
   title: z.string(),
   overview: z.string(),
-  release_date: z.string(),
+  release_date: z.string().optional(),
   vote_average: z.number(),
   poster_path: z.string().nullable()
 });
