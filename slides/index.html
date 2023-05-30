@@ -196,6 +196,56 @@ Steps
   );
  ```
 
+---
+ # Implement loading spinner
+ .subheader[
+ Multiple pieces of state or complex state
+ ]
+
+ Steps
+
+  * Create state variable for loading state `isLoading`
+  * Display `<Spinner />` component when `isLoading`
+  * Do not display videos while loading
+
+--
+
+## Is there a better way?
+
+Let's try to eliminate illegal states by using union types
+
+```tsx 
+const [movies, setMovies] = useState<SearchResult | 'Loading'>()
+```
+
+---
+ # Implement pagination
+ .subheader[
+ Events, conditional styling
+ ]
+
+ Steps
+
+  * Add page parameter to search function
+  * Create Pagination component that is shown at top and bottom if multiple pages exist in SearchResult
+    * Component should render up to 10 buttons which when clicked fetches the given page
+
+--
+Styles to use:
+
+```tsx 
+<div className="btn-group self-end">
+  <button type="button" className="btn">1</button>
+  <button type="button" className="btn">2</button>
+</div>
+```
+--
+
+for conditional styling, use `classNames` utility
+```tsx
+<button type="button" className={classNames('btn', { 'btn-active': isActive })}>1</button>
+```
+
 
 
     </textarea>
