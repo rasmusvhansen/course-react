@@ -269,6 +269,23 @@ for conditional styling, use `classNames` utility
 </div>
 ```
 
+---
+# Unit testing
+
+.subheader[
+ https://testing-library.com/docs/react-testing-library/example-intro
+ ]
+Steps
+
+* `npm test`
+* Add a spec file for GenreList (`GenreList.spec.tsx`)
+* `import { render, screen } from '@testing-library/react';`
+* Verify that all genres passed to GenreList are rendered. You can pass a dummy function to onGenreClick
+  * `screen.getAllByRole` can be used to get all buttons, `button.textContent` can be used to get the textContent
+* Verify that clicking a genre responds with the corresponding genre id. (use `vitest.fn()` to mock the onGenreClick function)
+  * `expect(clickFn).toHaveBeenCalledWith(2);`
+
+
 
     </textarea>
 
