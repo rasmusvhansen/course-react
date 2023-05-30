@@ -3,6 +3,13 @@
   <head>
     <title>Introduction to React</title>
     <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css"
+      integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
@@ -29,7 +36,51 @@
       li {
         line-height: 2rem;
       }
+      .language-tsx {
+        padding: 0.3em !important;
+      }
+      .remark-code {
+        font-size: 16px;
+      }
     </style>
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" data-manual></script>
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"
+      integrity="sha512-uOw7XYETzS/DPmmirpP5UCMihSDNMeyTS965J0/456OSPfxn9xEtHHjj5Q/5WefVdqyMfN/afmQnNpZd/tpkcA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"
+      integrity="sha512-xjGCJ9YxyZBfYTCHsEjkOZMoOse1W3cKMXv1szXrxs68myuXt0YTj3/xKPar6iDMlXzTUSEqwUxprWcyp+plaw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script type="application/javascript">
+      function parseLanguage(lang) {
+        return (
+          {
+            js: 'jsx',
+            ts: 'tsx'
+          }[lang] || lang
+        );
+      }
+      remark.highlighter.engine.highlightBlock = block => {
+        const language = parseLanguage(block.className.split(' ')[0]);
+        const prismLang = Prism.languages[language];
+        if (prismLang) {
+          block.parentNode.className = `${block.parentNode.className} language-${language}`;
+          block.innerHTML = Prism.highlight(block.textContent, prismLang);
+        } else {
+          console.warn(`Language '${language}' not supported?`);
+        }
+      };
+    </script>
   </head>
   <body>
     <textarea id="source">
@@ -90,14 +141,49 @@ Go to https://github.danskenet.net/bd3170/react-course and follow instructions
 - Unit testing
 - Mocking third party or global function (e.g fetch)
 
+---
+name: components
+# Render static data (Components, props)
+
+
+```tsx
+// Bare bones
+function MyButton() {
+  return <button type="button">Some button</button>;
+}
+```
+--
+
+```tsx
+// With props (inputs)
+function MyButton({ color, children }: { color: string; children: ReactNode }) {
+  return <button type="button" style={{ color }}>{children}</button>;
+}
+```
+
+--
+
+
+
+```tsx
+// With callbacks (event handlers)
+function MyButton({ onClick }: { onClick: VoidFunction }) {
+  return <button type="button" onClick={onClick}>Some button</button>;
+}
+```
+https://react.dev/learn/your-first-component
+
+---
 
 
 
 
     </textarea>
-    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+
     <script>
-      var slideshow = remark.create();
+      var slideshow = remark.create({
+        countIncrementalSlides: false
+      });
     </script>
   </body>
 </html>
