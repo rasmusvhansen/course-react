@@ -176,8 +176,8 @@ Event handlers, async data, useState hook
 
 Steps
 
- * Save movies as state variable (useState)
- * Create async search function that calls findMovies and sets movies state
+ * Save movies as state variable (`useState`)
+ * Create async search function that calls `findMovies` and sets movies state
  * Create search field that calls search function on submit
 
 
@@ -226,8 +226,8 @@ const [movies, setMovies] = useState<SearchResult | 'Loading'>()
 
  Steps
 
-  * Add page parameter to search function
-  * Create Pagination component that is shown at top and bottom if multiple pages exist in SearchResult
+  * Add page parameter to `search` function
+  * Create Pagination component that is shown at top and bottom if multiple pages exist in `SearchResult`
     * Component should render up to 10 buttons which when clicked fetches the given page
 
 --
@@ -246,6 +246,28 @@ for conditional styling, use `classNames` utility
 <button type="button" className={classNames('btn', { 'btn-active': isActive })}>1</button>
 ```
 
+---
+ # Load data on startup (genres)
+ .subheader[
+ useEffect - https://react.dev/learn/synchronizing-with-effects
+ ]
+
+ Steps
+
+  * Add a `useEffect` hook that fetches genres and saves it in new state variable (`getGenres` from movie service)
+  * Create a `GenreList` component that renders the genres and responds to clicks (a list of buttons)
+  * On genre-click, call `search` with genreId (a number)
+  * Modify search function to call `findByGenre` if the query is a number
+
+--
+
+### Styles to use:
+
+```tsx 
+<div className="space-x-2 space-y-2 mb-4">
+  <button type="button" className="btn btn-secondary btn-xs">Genre</button>
+</div>
+```
 
 
     </textarea>
