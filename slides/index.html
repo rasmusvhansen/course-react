@@ -285,6 +285,45 @@ Steps
 * Verify that clicking a genre responds with the corresponding genre id. (use `vitest.fn()` to mock the onGenreClick function)
   * `expect(clickFn).toHaveBeenCalledWith(2);`
 
+---
+# Unit testing
+.subheader[
+ Mocking globals. E.g. fetch
+ ]
+
+```typescript
+const fetchMock = (global.fetch = vi.fn());
+const mockFetch = (data: any) => 
+  fetchMock.mockResolvedValue({ json: () => Promise.resolve(data) } as Response);
+const mockFindMovies = (movieResult: TMDBResult) => mockFetch(movieResult);
+
+mockFindMovies({
+  page: 1,
+  total_pages: 5,
+  total_results: 90,
+  results: [
+    {
+      id: 1,
+      title: 'Title 1',
+      overview: 'Overview 1',
+      vote_average: 1.5,
+      poster_path: 'poster1.jpg'
+    }
+  ]
+});
+```
+
+---
+
+# Unit testing - MSW
+.subheader[
+A better approach for mocking http calls
+]
+
+### Mock Service Worker (MSW)
+
+A library which makes it easy to mock rest calls from both unit test, e2e test and in development
+https://mswjs.io/examples/
 
 
     </textarea>
