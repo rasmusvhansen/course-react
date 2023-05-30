@@ -85,6 +85,7 @@ const TMDBResultSchema = z.object({
 
 const TMDBGenreSchema = z.object({ genres: z.array(z.object({ id: z.number(), name: z.string() })) });
 
+export type TMDBResult = z.infer<typeof TMDBResultSchema>;
 type TMDBMovie = z.infer<typeof TMDBMovieSchema>;
 type TMDBGenreResult = z.infer<typeof TMDBGenreSchema>;
 export type Genres = TMDBGenreResult['genres'];
