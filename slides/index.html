@@ -42,6 +42,10 @@
       .remark-code {
         font-size: 16px;
       }
+      .subheader {
+        margin-top: -36px;
+        color: #777;
+      }
     </style>
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" data-manual></script>
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
@@ -133,7 +137,6 @@ Go to https://github.danskenet.net/bd3170/react-course and follow instructions
 - Mocking third party or global function (e.g fetch)
 
 ---
-name: components
 # Render static data (Components, props)
 
 
@@ -165,7 +168,33 @@ function MyButton({ onClick }: { onClick: VoidFunction }) {
 https://react.dev/learn/your-first-component
 
 ---
+# Search data from TMDB and render it 
 
+.subheader[
+Event handlers, async data, useState hook
+]
+
+Steps
+
+ * Save movies as state variable (useState)
+ * Create async search function that calls findMovies and sets movies state
+ * Create search field that calls search function on submit
+
+
+ https://react.dev/learn/state-a-components-memory
+--
+
+
+ ```tsx
+ function Search({ onSearch }: { onSearch: (query: string) => void }) {
+  const [query, setQuery] = useState('');
+  return (
+    <form onSubmit={e => { e.preventDefault(); onSearch(query); }}>
+    <input type="search" className="input" placeholder="Search for movies" value={query} 
+        onInput={e => setQuery(e.currentTarget.value)} />
+    </form>
+  );
+ ```
 
 
 
