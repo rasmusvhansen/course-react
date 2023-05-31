@@ -9,8 +9,14 @@ export function MovieSearch() {
   );
 }
 
-export function Movies({ movies }: { movies: Movie[] | undefined }) {
-  return <div className="grid grid-cols-3 gap-4 mt-4">{movies && movies.map(m => <MovieTile m={m} key={m.id} />)}</div>;
+export function Movies({ movies }: { movies: Movie[] }) {
+  return (
+    <div className="grid grid-cols-3 gap-4 mt-4">
+      {movies.map(m => (
+        <MovieTile m={m} key={m.id} />
+      ))}
+    </div>
+  );
 }
 
 export function MovieTile({ m }: { m: Movie }) {
