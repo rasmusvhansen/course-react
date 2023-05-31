@@ -4,8 +4,7 @@ import { findByGenre, findMovies, GenreResult, Genres, getGenres, Movie, SearchR
 import { Spinner } from './Spinner';
 import { range } from './util';
 
-export function MovieSearch() {
-  const [searchResult, setSearchResult] = useState<SearchResult | GenreResult | 'Loading'>();
+function useGenres() {
   const [genres, setGenres] = useState<Genres>([]);
   useEffect(() => {
     const get = async () => {
@@ -14,6 +13,12 @@ export function MovieSearch() {
     };
     get();
   }, []);
+  return genres;
+}
+
+export function MovieSearch() {
+  const [searchResult, setSearchResult] = useState<SearchResult | GenreResult | 'Loading'>();
+  const genres = useGenres();
 
   const search = async (queryOrGenreId: string | number, page = 1) => {
     setSearchResult('Loading');

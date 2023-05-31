@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { render, screen } from '@testing-library/react';
 import { GenreList } from './MovieSearch';
 import { Genres } from './services/movies';
@@ -19,8 +20,7 @@ const genres: Genres = [
 
 describe('GenreList', () => {
   it('should render all genres passed in', async () => {
-    const clickFn = vitest.fn();
-    render(<GenreList genres={genres} onGenreClick={clickFn} />);
+    render(<GenreList genres={genres} onGenreClick={() => {}} />);
 
     const genreButtons = screen.getAllByRole('button');
     expect(genreButtons).toHaveLength(3);
