@@ -273,6 +273,25 @@ for conditional styling, use `classNames` utility
 ```
 
 ---
+
+# Custom hooks
+.subheader[
+ For reuse or cleanup
+ ]
+
+How to write your own hooks:
+
+ * Create a function `useXXX`
+ * Move desired logic to the function 
+ * Call it as any other hook
+
+Example: `useGenres`
+
+Extract logic around fetching and setting genres to a `useGenres` hook and call that from `MovieSearch` component
+
+https://react.dev/learn/reusing-logic-with-custom-hooks
+
+---
 # Unit testing
 
 .subheader[
@@ -288,6 +307,10 @@ Steps
   * `screen.getAllByRole` can be used to get all buttons, `button.textContent` can be used to get the textContent
 * Verify that clicking a genre responds with the corresponding genre id. (use `vitest.fn()` to mock the onGenreClick function)
   * `expect(clickFn).toHaveBeenCalledWith(2);`
+
+--
+
+For bonus points write unit relevant tests for Pagination component.
 
 ---
 # Unit testing
