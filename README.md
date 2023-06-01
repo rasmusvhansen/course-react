@@ -13,3 +13,7 @@ This is the material for a one day course introducing the basics of developing a
 1. `npm run dev`
 
 The task at hand is to build a Movie Search application. A good starting point is to look inside `MovieSearch.tsx`
+
+## Slides
+
+Slides with links etc. can be found in `slides/index.html` just open the file in a browser and it should work.
