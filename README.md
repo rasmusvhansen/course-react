@@ -17,3 +17,9 @@ The task at hand is to build a Movie Search application. A good starting point i
 ## Slides
 
 Slides with links etc. can be found in `slides/index.html` just open the file in a browser and it should work.
+
+## Cheatsheet
+
+The react docs are awesome, take a look at them: https://react.dev/learn
+
+For TypeScript specific gotchas I have created a short [cheatsheet](./CHEATSHEET.md)
